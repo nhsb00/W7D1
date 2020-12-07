@@ -1,4 +1,7 @@
 class CatsController < ApplicationController
+  
+  before_action :require_user_owns_cat
+
   def index
     @cats = Cat.all
     render :index
@@ -25,6 +28,7 @@ class CatsController < ApplicationController
   end
 
   def edit
+
     @cat = Cat.find(params[:id])
     render :edit
   end
@@ -44,4 +48,11 @@ class CatsController < ApplicationController
   def cat_params
     params.require(:cat).permit(:age, :birth_date, :color, :description, :name, :sex)
   end
+
+  def require_user_owns_cat
+    @cat.user_id == @user.id
+
+
+  end
+
 end

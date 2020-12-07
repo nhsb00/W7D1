@@ -9,6 +9,23 @@
   </head>
 
   <body>
+    <% if current_user.nil? %>
+      <a href="<%= new_session_url %>">Log In</a>
+      <br/>
+      <a href="<%= new_user_url %>">Create User</a>
+    <% else %>
+      <h2> Logged in as: <%= current_user.user_name %> </h2>
+      <br/>
+      <form action="<%=session_url%>" method="post">
+        <input type="hidden" name="authenticity_token" value="<%=form_authenticity_token%>">
+        <input type="hidden" value="delete" name="_method">
+        <input type="Submit" value="logout">
+      </form>
+      
+    <% end %>
+
+
+    
     <%= yield %>
   </body>
 </html>
